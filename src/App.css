@@ -18,7 +18,7 @@
 
 /* Белая полупрозрачная карточка по центру */
 .card {
-  background: rgba(255, 255, 255, 0.9); /* полупрозрачная */
+  background: rgba(255, 255, 255, 0.6); /* полупрозрачная */
   -webkit-backdrop-filter: blur(6px);
   backdrop-filter: blur(6px);
   border: 1px solid #e5e7eb;
