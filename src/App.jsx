@@ -102,8 +102,8 @@ const App = () => {
         backgroundImage: "url('/Андроид 2.png')",
       }}
     >
-      <div className="relative z-10 max-w-2xl w-full mx-auto">
-        <div className="bg-white/70 backdrop-blur-md rounded-2xl shadow-2xl p-8 border border-gray-200">
+      <div className="relative z-10 max-w-2xl w-full mx-4">
+        <div className="bg-white/90 backdrop-blur-md rounded-2xl shadow-2xl p-8 border border-gray-200">
           <div className="text-center mb-8">
             <h1 className="text-3xl font-bold text-gray-900 mb-4 leading-snug">
               Добро пожаловать в Humanitas Engineering
@@ -145,7 +145,7 @@ const App = () => {
           {!showResults ? (
             <button
               onClick={handleSubmitVote}
-              className="w-full mt-8 bg-blue-600 hover:bg-blue-700 text-white font-bold py-4 px-6 rounded-xl text-lg transition"
+              className="w-2/3 mx-auto block mt-10 bg-blue-600 hover:bg-blue-700 text-white font-bold py-5 px-8 rounded-2xl text-xl transition"
             >
               Отправить голос
             </button>
