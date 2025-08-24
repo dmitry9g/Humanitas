@@ -96,24 +96,27 @@ const App = () => {
   }, [votes, showResults]);
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-900 to-gray-800 flex items-center justify-center p-4 relative overflow-hidden">
-      <div className="absolute inset-0 opacity-20">
-        <img
-          src="/Андроид 2.png"
-          alt="Background"
-          className="w-full h-full object-cover"
-        />
-      </div>
+    <div className="min-h-screen bg-gray-900 flex items-center justify-center p-4">
+      <div
+        className="relative rounded-2xl shadow-2xl border border-gray-200 text-white overflow-hidden w-full max-w-2xl"
+        style={{
+          backgroundImage: 'url(/Андроид 2.png)',
+          backgroundSize: "cover",
+          backgroundPosition: "center",
+        }}
+      >
+        <div className="absolute inset-0 bg-black bg-opacity-50" />
 
-      <div className="relative z-10 max-w-2xl w-full mx-auto">
-        <div className="bg-white/70 backdrop-blur-sm rounded-2xl shadow-2xl p-8 border border-gray-200">
+        <div className="relative z-10 p-8">
           <div className="text-center mb-8">
-            <h1 className="text-3xl font-bold text-gray-800 mb-4 leading-snug text-center">
-              Добро пожаловать в Humanitas Engineering
+            <h1 className="text-3xl font-bold mb-4">
+              Добро пожаловать в Humanitas Engineering
               <br />
-              Создайте своего идеального партнёра
+              <span className="text-lg font-normal">
+                Создайте своего идеального партнёра
+              </span>
             </h1>
-            <p className="text-lg text-gray-600">
+            <p className="text-lg text-gray-300">
               Выберите значения для каждого параметра от 1 до 10.
             </p>
           </div>
@@ -121,7 +124,7 @@ const App = () => {
           <div className="space-y-6">
             {parameters.map((param) => (
               <div key={param.key} className="space-y-2">
-                <label className="block text-lg font-semibold text-gray-700">
+                <label className="block text-lg font-semibold">
                   {param.name}
                 </label>
                 <div className="flex items-center space-x-4">
@@ -133,9 +136,9 @@ const App = () => {
                     onChange={(e) =>
                       handleInputChange(param.key, e.target.value)
                     }
-                    className="flex-1 h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer slider"
+                    className="flex-1 h-2 bg-gray-300 rounded-lg appearance-none cursor-pointer"
                   />
-                  <span className="text-xl font-medium text-gray-700 w-8">
+                  <span className="text-xl font-medium w-8">
                     {userVote[param.key]}
                   </span>
                 </div>
@@ -146,30 +149,28 @@ const App = () => {
           {!showResults ? (
             <button
               onClick={handleSubmitVote}
-              className="w-full mt-8 bg-blue-600 hover:bg-blue-700 text-white font-bold py-4 px-6 rounded-xl transition-colors duration-200 text-lg"
+              className="w-full mt-8 bg-blue-600 hover:bg-blue-700 text-white font-bold py-4 px-6 rounded-xl text-lg transition"
             >
               Отправить голос
             </button>
           ) : (
             <div className="mt-8 space-y-6">
-              <div className="bg-green-50 border border-green-200 rounded-xl p-4">
-                <h3 className="text-lg font-semibold text-green-800 mb-2">
-                  Ваш результат:
-                </h3>
-                <p className="text-2xl font-bold text-green-700">
+              <div className="bg-green-600 bg-opacity-30 border border-green-400 rounded-xl p-4">
+                <h3 className="text-lg font-semibold mb-2">Ваш результат:</h3>
+                <p className="text-2xl font-bold text-green-300">
                   {userResult}
                 </p>
               </div>
 
               {finalResult && (
-                <div className="bg-blue-50 border border-blue-200 rounded-xl p-4">
-                  <h3 className="text-lg font-semibold text-blue-800 mb-2">
+                <div className="bg-blue-600 bg-opacity-30 border border-blue-400 rounded-xl p-4">
+                  <h3 className="text-lg font-semibold mb-2">
                     Финальный результат:
                   </h3>
-                  <p className="text-2xl font-bold text-blue-700">
+                  <p className="text-2xl font-bold text-blue-200">
                     {finalResult}
                   </p>
-                  <p className="text-sm text-blue-600 mt-2">
+                  <p className="text-sm text-blue-300 mt-2">
                     Определено на основе голосов {votes.length} участников
                   </p>
                 </div>
@@ -177,34 +178,7 @@ const App = () => {
             </div>
           )}
         </div>
-
-        <div className="mt-6 text-center text-sm text-gray-500">
-          <p>Голосование проходит анонимно</p>
-        </div>
       </div>
-
-      <style jsx>{`
-        .slider::-webkit-slider-thumb {
-          appearance: none;
-          width: 20px;
-          height: 20px;
-          border-radius: 50%;
-          background-color: #3b82f6;
-          cursor: pointer;
-          border: 2px solid white;
-          box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-        }
-
-        .slider::-moz-range-thumb {
-          width: 20px;
-          height: 20px;
-          border-radius: 50%;
-          background-color: #3b82f6;
-          cursor: pointer;
-          border: 2px solid white;
-          box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-        }
-      `}</style>
     </div>
   );
 };
