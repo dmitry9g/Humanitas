@@ -42,143 +42,93 @@ const App = () => {
         vote.sociability * 0.2 +
         vote.decisiveness * 0.2,
     };
-
-    const maxScore = Math.max(...Object.values(scores));
-    return Object.keys(scores).find((key) => scores[key] === maxScore);
+    const max = Math.max(...Object.values(scores));
+    return Object.keys(scores).find((k) => scores[k] === max);
   };
 
   const handleInputChange = (key, value) => {
-    setUserVote((prev) => ({
-      ...prev,
-      [key]: parseInt(value),
-    }));
+    setUserVote((prev) => ({ ...prev, [key]: parseInt(value) }));
   };
 
   const handleSubmitVote = () => {
-    const userResult = determineType(userVote);
-    setUserResult(userResult);
-
-    const newVote = {
-      ...userVote,
-      type: userResult,
-    };
-
-    setVotes((prev) => [...prev, newVote]);
+    const result = determineType(userVote);
+    setUserResult(result);
+    setVotes((prev) => [...prev, { ...userVote, type: result }]);
     setShowResults(true);
   };
 
   const calculateFinalResult = () => {
     if (votes.length === 0) return null;
-
-    const counts = {
-      "Секси кошка": 0,
-      "Нимфетка": 0,
-      "Дерзкая рокерша": 0,
-    };
-
-    votes.forEach((vote) => {
-      counts[vote.type]++;
-    });
-
-    const maxCount = Math.max(...Object.values(counts));
-    const finalTypes = Object.keys(counts).filter(
-      (type) => counts[type] === maxCount
-    );
-
-    return finalTypes[0];
+    const counts = { "Секси кошка": 0, "Нимфетка": 0, "Дерзкая рокерша": 0 };
+    votes.forEach((v) => (counts[v.type] += 1));
+    const max = Math.max(...Object.values(counts));
+    return Object.keys(counts).find((k) => counts[k] === max);
   };
 
   useEffect(() => {
     if (showResults && votes.length > 0) {
-      const result = calculateFinalResult();
-      setFinalResult(result);
+      setFinalResult(calculateFinalResult());
     }
   }, [votes, showResults]);
 
   return (
-    <div
-      className="min-h-screen bg-cover bg-center flex items-center justify-center p-4"
-      style={{
-        backgroundImage: "url('/Андроид 2.png')",
-      }}
-    >
-      <div className="relative z-10 max-w-2xl w-full mx-4">
-        <div className="bg-white/90 backdrop-blur-md rounded-2xl shadow-2xl p-8 border border-gray-200">
-          <div className="text-center mb-8">
-            <h1 className="text-3xl font-bold text-gray-900 mb-4 leading-snug">
+    <div className="page-bg" style={{ backgroundImage: "url('/Андроид 2.png')" }}>
+      <div className="wrap">
+        <div className="card">
+          <div className="card-header">
+            <h1 className="title">
               Добро пожаловать в Humanitas Engineering
               <br />
-              <span className="text-lg font-normal block mt-1">
-                Создайте своего идеального партнёра
-              </span>
+              <span className="subtitle">Создайте своего идеального партнёра</span>
             </h1>
-            <p className="text-md text-gray-700">
-              Выберите значения для каждого параметра от 1 до 10.
-            </p>
+            <p className="lead">Выберите значения для каждого параметра от 1 до 10.</p>
           </div>
 
-          <div className="space-y-6">
-            {parameters.map((param) => (
-              <div key={param.key} className="space-y-2">
-                <label className="block text-lg font-semibold text-gray-800">
-                  {param.name}
-                </label>
-                <div className="flex items-center space-x-4">
+          <div className="sliders">
+            {parameters.map((p) => (
+              <div key={p.key} className="slider-row">
+                <label className="slider-label" htmlFor={p.key}>{p.name}</label>
+                <div className="slider-control">
                   <input
+                    id={p.key}
                     type="range"
                     min="1"
                     max="10"
-                    value={userVote[param.key]}
-                    onChange={(e) =>
-                      handleInputChange(param.key, e.target.value)
-                    }
-                    className="flex-1 h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer"
+                    value={userVote[p.key]}
+                    onChange={(e) => handleInputChange(p.key, e.target.value)}
                   />
-                  <span className="text-xl font-medium text-gray-800 w-8">
-                    {userVote[param.key]}
-                  </span>
+                  <span className="slider-value">{userVote[p.key]}</span>
                 </div>
               </div>
             ))}
           </div>
 
           {!showResults ? (
-            <button
-              onClick={handleSubmitVote}
-              className="w-2/3 mx-auto block mt-10 bg-blue-600 hover:bg-blue-700 text-white font-bold py-5 px-8 rounded-2xl text-xl transition"
-            >
+            <button className="submit-btn" onClick={handleSubmitVote}>
               Отправить голос
             </button>
           ) : (
-            <div className="mt-8 space-y-6">
-              <div className="bg-green-50 border border-green-200 rounded-xl p-4">
-                <h3 className="text-lg font-semibold text-green-800 mb-2">
-                  Ваш результат:
-                </h3>
-                <p className="text-2xl font-bold text-green-700">
-                  {userResult}
-                </p>
+            <div className="results">
+              <div className="result-box green">
+                <h3>Ваш результат:</h3>
+                <p className="result-text">{userResult}</p>
               </div>
-
               {finalResult && (
-                <div className="bg-blue-50 border border-blue-200 rounded-xl p-4">
-                  <h3 className="text-lg font-semibold text-blue-800 mb-2">
-                    Финальный результат:
-                  </h3>
-                  <p className="text-2xl font-bold text-blue-700">
-                    {finalResult}
-                  </p>
-                  <p className="text-sm text-blue-600 mt-2">
-                    Определено на основе голосов {votes.length} участников
-                  </p>
+                <div className="result-box blue">
+                  <h3>Финальный результат:</h3>
+                  <p className="result-text">{finalResult}</p>
+                  <p className="muted">Определено на основе голосов {votes.length} участников</p>
                 </div>
               )}
             </div>
           )}
         </div>
+
+        <p className="footnote">Голосование проходит анонимно</p>
       </div>
     </div>
   );
 };
 
 export default App;
+
