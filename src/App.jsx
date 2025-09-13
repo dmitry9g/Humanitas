@@ -27,20 +27,20 @@ const App = () => {
   const determineType = (vote) => {
     const scores = {
       "Секси кошка":
-        vote.sexuality * 0.4 +
-        vote.emotionality * 0.3 +
-        vote.tactility * 0.2 +
-        vote.sociability * 0.1,
+        vote.sexuality * 0.6 +
+        vote.decisiveness * 0.3 +
+        vote.tactility * 0.5 +
+        vote.sociability * 0.3,
       "Нимфетка":
-        vote.sexuality * 0.3 +
-        vote.emotionality * 0.3 +
-        vote.sociability * 0.2 +
-        vote.decisiveness * 0.2,
+        vote.sexuality * 0.5 +
+        vote.emotionality * 0.7 +
+        vote.sociability * 0.6 +
+        vote.tactility * 0.5,
       "Дерзкая рокерша":
-        vote.intellect * 0.4 +
-        vote.emotionality * 0.2 +
-        vote.sociability * 0.2 +
-        vote.decisiveness * 0.2,
+        vote.intellect * 0.3 +
+        vote.emotionality * 0.3 +
+        vote.sociability * 0.6 +
+        vote.decisiveness * 0.5,
     };
     const max = Math.max(...Object.values(scores));
     return Object.keys(scores).find((k) => scores[k] === max);
