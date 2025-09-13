@@ -25,25 +25,15 @@ const App = () => {
   ];
 
   const determineType = (vote) => {
-    const scores = {
-      "Секси кошка":
-        vote.sexuality * 0.6 +
-        vote.decisiveness * 0.3 +
-        vote.tactility * 0.5 +
-        vote.sociability * 0.3,
-      "Нимфетка":
-        vote.sexuality * 0.5 +
-        vote.emotionality * 0.7 +
-        vote.sociability * 0.6 +
-        vote.tactility * 0.5,
-      "Дерзкая рокерша":
-        vote.intellect * 0.3 +
-        vote.emotionality * 0.3 +
-        vote.sociability * 0.6 +
-        vote.decisiveness * 0.5,
-    };
-    const max = Math.max(...Object.values(scores));
-    return Object.keys(scores).find((k) => scores[k] === max);
+    if (vote.sexuality > 6) {
+      if (vote.tactility > 6) {
+        return "Секси кошка";
+      } else {
+        return "Нимфетка";
+      }
+    } else {
+      return "Дерзкая рокерша";
+    }
   };
 
   const handleInputChange = (key, value) => {
@@ -87,7 +77,9 @@ const App = () => {
           <div className="sliders">
             {parameters.map((p) => (
               <div key={p.key} className="slider-row">
-                <label className="slider-label" htmlFor={p.key}>{p.name}</label>
+                <label className="slider-label" htmlFor={p.key}>
+                  {p.name}
+                </label>
                 <div className="slider-control">
                   <input
                     id={p.key}
@@ -117,7 +109,9 @@ const App = () => {
                 <div className="result-box blue">
                   <h3>Финальный результат:</h3>
                   <p className="result-text">{finalResult}</p>
-                  <p className="muted">Определено на основе голосов {votes.length} участников</p>
+                  <p className="muted">
+                    Определено на основе голосов {votes.length} участников
+                  </p>
                 </div>
               )}
             </div>
@@ -131,4 +125,3 @@ const App = () => {
 };
 
 export default App;
-
